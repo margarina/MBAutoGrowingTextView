@@ -127,7 +127,7 @@
     CGContextSetFillColorWithColor(context, fillColor);
     
     // Draw and fill the bubble
-    if (self.arrowDirection == BCBubbleViewArrowDirectionUp)
+    if (self.arrowDirection == BCBubbleTextViewArrowDirectionUp)
     {
         CGContextBeginPath(context);
         CGContextMoveToPoint(context, borderRadius + strokeWidth + 0.5f, strokeWidth + arrowHeight + 0.5f);
