@@ -28,6 +28,8 @@ typedef NS_ENUM(NSUInteger, BCBubbleTextViewArrowDirection) {
 @property (nonatomic, assign) BCBubbleTextViewArrowDirection arrowDirection;
 
 @property (nonatomic, assign) CGFloat arrowOrigin;
+@property (nonatomic, assign) CGFloat arrowWidth;
+@property (nonatomic, assign) CGFloat arrowHeight;
 @property (nonatomic, strong) UIColor *borderColor;
 @property (nonatomic, strong) UIColor *fillColor;
 

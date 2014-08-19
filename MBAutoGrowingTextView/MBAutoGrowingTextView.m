@@ -39,11 +39,14 @@
 
 - (void)setup
 {
-    self.borderColor = [UIColor bcs60GrayColor];
-    self.fillColor = [UIColor bcs230GrayColor];
+    self.borderColor = [UIColor lightGrayColor];
+    self.fillColor = [UIColor whiteColor];
     
     self.arrowOrigin = round(self.bounds.size.width / 2.0f);
     self.arrowDirection = BCBubbleTextViewArrowDirectionUp;
+    
+    self.arrowWidth = 40.0f;
+    self.arrowHeight = 20.0f;
     
     [self associateConstraints];
 }
@@ -113,6 +116,8 @@
     CGFloat strokeWidth = 1.0f;
     CGFloat borderRadius = 8.0f;
     CGFloat arrowOrigin = self.arrowOrigin;
+    CGFloat arrowWidth = self.arrowWidth;
+    CGFloat arrowHeight = self.arrowHeight;
     CGColorRef borderColor = [self.borderColor CGColor];
     CGColorRef fillColor = [self.fillColor CGColor];
     
@@ -122,31 +127,31 @@
     CGContextSetFillColorWithColor(context, fillColor);
     
     // Draw and fill the bubble
-    if (self.arrowDirection == BCBubbleTextViewArrowDirectionUp)
+    if (self.arrowDirection == BCBubbleViewArrowDirectionUp)
     {
         CGContextBeginPath(context);
-        CGContextMoveToPoint(context, borderRadius + strokeWidth + 0.5f, strokeWidth + HEIGHTOFPOPUPTRIANGLE + 0.5f);
-        CGContextAddLineToPoint(context, round(arrowOrigin - WIDTHOFPOPUPTRIANGLE / 2.0f) + 0.5f, HEIGHTOFPOPUPTRIANGLE + strokeWidth + 0.5f);
+        CGContextMoveToPoint(context, borderRadius + strokeWidth + 0.5f, strokeWidth + arrowHeight + 0.5f);
+        CGContextAddLineToPoint(context, round(arrowOrigin - arrowWidth / 2.0f) + 0.5f, arrowHeight + strokeWidth + 0.5f);
         CGContextAddLineToPoint(context, round(arrowOrigin) + 0.5f, strokeWidth + 0.5f);
-        CGContextAddLineToPoint(context, round(arrowOrigin + WIDTHOFPOPUPTRIANGLE / 2.0f) + 0.5f, HEIGHTOFPOPUPTRIANGLE + strokeWidth + 0.5f);
-        CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, strokeWidth + HEIGHTOFPOPUPTRIANGLE + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
-        CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, round(currentFrame.size.width / 2.0f + WIDTHOFPOPUPTRIANGLE / 2.0f) - strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
-        CGContextAddArcToPoint(context, strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, strokeWidth + 0.5f, HEIGHTOFPOPUPTRIANGLE + strokeWidth + 0.5f, borderRadius - strokeWidth);
-        CGContextAddArcToPoint(context, strokeWidth + 0.5f, strokeWidth + HEIGHTOFPOPUPTRIANGLE + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, HEIGHTOFPOPUPTRIANGLE + strokeWidth + 0.5f, borderRadius - strokeWidth);
+        CGContextAddLineToPoint(context, round(arrowOrigin + arrowWidth / 2.0f) + 0.5f, arrowHeight + strokeWidth + 0.5f);
+        CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, strokeWidth + arrowHeight + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
+        CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, round(currentFrame.size.width / 2.0f + arrowWidth / 2.0f) - strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
+        CGContextAddArcToPoint(context, strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, strokeWidth + 0.5f, arrowHeight + strokeWidth + 0.5f, borderRadius - strokeWidth);
+        CGContextAddArcToPoint(context, strokeWidth + 0.5f, strokeWidth + arrowHeight + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, arrowHeight + strokeWidth + 0.5f, borderRadius - strokeWidth);
         CGContextClosePath(context);
         CGContextDrawPath(context, kCGPathFillStroke);
     }
     else
     {
         CGContextBeginPath(context);
-        CGContextMoveToPoint(context, borderRadius + strokeWidth + HEIGHTOFPOPUPTRIANGLE + 0.5f, strokeWidth + 0.5f);
+        CGContextMoveToPoint(context, borderRadius + strokeWidth + arrowHeight + 0.5f, strokeWidth + 0.5f);
         CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, strokeWidth + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
         CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, round(currentFrame.size.width / 2.0f) - strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
-        CGContextAddArcToPoint(context, HEIGHTOFPOPUPTRIANGLE + strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, strokeWidth + 0.5f, strokeWidth + 0.5f, borderRadius - strokeWidth);
-        CGContextAddLineToPoint(context, HEIGHTOFPOPUPTRIANGLE + strokeWidth + 0.5f, round(arrowOrigin + WIDTHOFPOPUPTRIANGLE / 2.0f) + 0.5f);
+        CGContextAddArcToPoint(context, arrowHeight + strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, strokeWidth + 0.5f, strokeWidth + 0.5f, borderRadius - strokeWidth);
+        CGContextAddLineToPoint(context, arrowHeight + strokeWidth + 0.5f, round(arrowOrigin + arrowWidth / 2.0f) + 0.5f);
         CGContextAddLineToPoint(context, strokeWidth + 0.5f, round(arrowOrigin) + 0.5f);
-        CGContextAddLineToPoint(context, HEIGHTOFPOPUPTRIANGLE + strokeWidth + 0.5f, round(arrowOrigin - WIDTHOFPOPUPTRIANGLE / 2.0f) + 0.5f);
-        CGContextAddArcToPoint(context, strokeWidth + HEIGHTOFPOPUPTRIANGLE + 0.5f, strokeWidth + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, HEIGHTOFPOPUPTRIANGLE + strokeWidth + 0.5f, borderRadius - strokeWidth);
+        CGContextAddLineToPoint(context, arrowHeight + strokeWidth + 0.5f, round(arrowOrigin - arrowWidth / 2.0f) + 0.5f);
+        CGContextAddArcToPoint(context, strokeWidth + arrowHeight + 0.5f, strokeWidth + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, arrowHeight + strokeWidth + 0.5f, borderRadius - strokeWidth);
         CGContextClosePath(context);
         CGContextDrawPath(context, kCGPathFillStroke);
     }
