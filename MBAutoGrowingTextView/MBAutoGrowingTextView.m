@@ -100,6 +100,9 @@
     
     // update the height constraint
     self.heightConstraint.constant = newHeight;
+    
+    // Redraw bubble.
+    [self setNeedsDisplay];
 }
 
 #pragma mark - Drawing
