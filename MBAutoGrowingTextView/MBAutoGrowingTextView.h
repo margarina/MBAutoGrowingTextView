@@ -33,4 +33,6 @@ typedef NS_ENUM(NSUInteger, BCBubbleTextViewArrowDirection) {
 @property (nonatomic, strong) UIColor *borderColor;
 @property (nonatomic, strong) UIColor *fillColor;
 
+- (void)updateHeight;
+
 @end

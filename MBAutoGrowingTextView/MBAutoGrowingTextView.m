@@ -72,14 +72,11 @@
             }
         }
     }
-
+    
 }
 
-- (void) layoutSubviews
+- (void)updateHeight
 {
-    [super layoutSubviews];
-    
-    
     NSAssert(self.heightConstraint != nil, @"Unable to find height auto-layout constraint. MBAutoGrowingTextView\
              needs a Auto-layout environment to function. Make sure you are using Auto Layout and that UITextView is enclosed in\
              a view with valid auto-layout constraints.");
@@ -87,12 +84,12 @@
     // calculate size needed for the text to be visible without scrolling
     CGSize sizeThatFits = [self sizeThatFits:self.frame.size];
     float newHeight = sizeThatFits.height;
-
+    
     // if there is any minimal height constraint set, make sure we consider that
     if (self.maxHeightConstraint) {
         newHeight = MIN(newHeight, self.maxHeightConstraint.constant);
     }
-
+    
     // if there is any maximal height constraint set, make sure we consider that
     if (self.minHeightConstraint) {
         newHeight = MAX(newHeight, self.minHeightConstraint.constant);
@@ -109,6 +106,8 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    [super drawRect:rect];
+    
     if (self.arrowDirection == BCBubbleTextViewArrowDirectionNone)
     {
         return;
@@ -150,7 +149,7 @@
         CGContextMoveToPoint(context, borderRadius + strokeWidth + arrowHeight + 0.5f, strokeWidth + 0.5f);
         CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, strokeWidth + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
         CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, round(currentFrame.size.width / 2.0f) - strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
-        CGContextAddArcToPoint(context, arrowHeight + strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, strokeWidth + 0.5f, strokeWidth + 0.5f, borderRadius - strokeWidth);
+        CGContextAddArcToPoint(context, arrowHeight + strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, arrowHeight + strokeWidth + 0.5f, strokeWidth + 0.5f, borderRadius - strokeWidth);
         CGContextAddLineToPoint(context, arrowHeight + strokeWidth + 0.5f, round(arrowOrigin + arrowWidth / 2.0f) + 0.5f);
         CGContextAddLineToPoint(context, strokeWidth + 0.5f, round(arrowOrigin) + 0.5f);
         CGContextAddLineToPoint(context, arrowHeight + strokeWidth + 0.5f, round(arrowOrigin - arrowWidth / 2.0f) + 0.5f);
@@ -161,13 +160,14 @@
     
     // Draw a clipping path for the fill
     //    CGContextBeginPath(context);
-    //    CGContextMoveToPoint(context, borderRadius + strokeWidth + 0.5f, round((currentFrame.size.height + HEIGHTOFPOPUPTRIANGLE) * 0.50f) + 0.5f);
-    //    CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, round((currentFrame.size.height + HEIGHTOFPOPUPTRIANGLE) * 0.50f) + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
-    //    CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, round(currentFrame.size.width / 2.0f + WIDTHOFPOPUPTRIANGLE / 2.0f) - strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
-    //    CGContextAddArcToPoint(context, strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, strokeWidth + 0.5f, HEIGHTOFPOPUPTRIANGLE + strokeWidth + 0.5f, borderRadius - strokeWidth);
-    //    CGContextAddArcToPoint(context, strokeWidth + 0.5f, round((currentFrame.size.height + HEIGHTOFPOPUPTRIANGLE) * 0.50f) + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, round((currentFrame.size.height + HEIGHTOFPOPUPTRIANGLE) * 0.50f) + 0.5f, borderRadius - strokeWidth);
+    //    CGContextMoveToPoint(context, borderRadius + strokeWidth + 0.5f, round((currentFrame.size.height + arrowHeight) * 0.50f) + 0.5f);
+    //    CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, round((currentFrame.size.height + arrowHeight) * 0.50f) + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
+    //    CGContextAddArcToPoint(context, currentFrame.size.width - strokeWidth - 0.5f, currentFrame.size.height - strokeWidth - 0.5f, round(currentFrame.size.width / 2.0f + arrowWidth / 2.0f) - strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, borderRadius - strokeWidth);
+    //    CGContextAddArcToPoint(context, strokeWidth + 0.5f, currentFrame.size.height - strokeWidth - 0.5f, strokeWidth + 0.5f, arrowHeight + strokeWidth + 0.5f, borderRadius - strokeWidth);
+    //    CGContextAddArcToPoint(context, strokeWidth + 0.5f, round((currentFrame.size.height + arrowHeight) * 0.50f) + 0.5f, currentFrame.size.width - strokeWidth - 0.5f, round((currentFrame.size.height + arrowHeight) * 0.50f) + 0.5f, borderRadius - strokeWidth);
     //    CGContextClosePath(context);
     //    CGContextClip(context);
+    
 }
 
 @end
